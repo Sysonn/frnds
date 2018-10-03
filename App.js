@@ -3,18 +3,22 @@ import { createBottomTabNavigator } from "react-navigation";
 import Styles from './styles/styles.js';
 
 import Home from './screens/Home';
-import Settings from './screens/Settings';
+import Profile from './screens/Profile';
 import Frnds from './screens/Frnds';
+import Sail from './screens/Sail';
 
 export const Tab = createBottomTabNavigator({
   Home: {
     screen: Home,
   },
-  Settings: {
-    screen: Settings,
+  Profile: {
+    screen: Profile,
   },
   Frnds: {
     screen: Frnds,
+  },
+  Sail:{
+    screen: Sail,
   },
 }, {
   tabBarPosition: 'bottom',
@@ -27,7 +31,10 @@ export const Tab = createBottomTabNavigator({
     labelStyle: {
       fontSize: 12,
       padding: 12
-    }
+    },
+    style: {
+      borderTopColor: 'red',
+    },
   }
 });
 

@@ -14,16 +14,7 @@ import {
     StatusBar
   } from 'react-native';
 //import styles from '../styles/styles';
-
-// export default class HomeScreen extends React.Component {
-//     render() {
-//       return (
-//         <View style={styles.body}>
-//           <Text>Home!!!!!</Text>
-//         </View>
-//       );
-//     }
-//   }
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
   export default class HomeScreen extends React.Component {
 
@@ -47,14 +38,14 @@ import {
         />
           <View style={styles.navBar}>
             {/* <Image source={require('./images/flogo.png')} style={{ width: 100, height: 50 }} /> */}
-            {/* <Icon style={styles.noteItem} name="notifications" size={25} /> */}
+            <Icon style={styles.noteItem} name="notifications" size={25} />
             <Text style={{alignItems: 'center', justifyContent: 'center', color: 'white', marginLeft: 60, fontSize: 20, fontWeight:'bold', }} >Home</Text>
             <View style={styles.rightNav}>
               <TouchableOpacity>
-                {/* <Icon style={styles.navItem} name="search" size={25} /> */}
+                <Icon style={styles.navItem} name="search" size={25} />
               </TouchableOpacity>
               <TouchableOpacity>
-              {/* <Icon style={styles.navItem} name="more-vert" size={25} /> */}
+              <Icon style={styles.navItem} name="more-vert" size={25} />
               </TouchableOpacity>
             </View>
           </View>
