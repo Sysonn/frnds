@@ -35,7 +35,7 @@ const Users = [
   {id: "10", name: "@PeterP", desc: "Description goes here", uri: require('../images/nondefault/spiderman.jpg')},
 ]
 
-export default class App2 extends Component{
+export default class Sail extends Component{
 
   state = {
     modalVisible: false,
