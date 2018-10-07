@@ -60,20 +60,23 @@ export default class Profile extends Component{
           </TouchableOpacity>
 
           {/* <View style={styles.ProfileCon}> */}
-          <View style={{alignItems: 'center'}}>
+          
+            <View style={styles.ProfilePost}>
+
+              <View style={{alignItems: 'center'}}>
               <View style={styles.proPic}>
                {/* <Image source={require('./images/default.png')} style={{ width: 100, height: 100, borderRadius: 50, }} /> */}
                <Image source={require('../images/nondefault/profilenon.png')} style={{ width: 100, height: 100, borderRadius: 50, }} />
               </View>
-          </View>
-            <View style={styles.ProfilePost}>
+              </View>
+
               <Text style={styles.profileSub}>
               @Derek
               </Text>
          
 
           
-              <Text style={{fontSize: 18, marginTop: 100, height: 20}}>Hi, I'm Derek.</Text>
+              <Text style={{fontSize: 18, marginTop: 50, height: 20}}>Hi, I'm Derek.</Text>
               <Text style={{fontSize: 18, marginTop: 80, color:'#ED4A4A'}}>Interests:</Text>
               <Image style={{width: 200, resizeMode: 'contain', marginTop: -50,}} source={require('../images/interests.png')} />
               {/* <Image style={{width: 200, resizeMode: 'contain', marginTop: -120,}} source={require('./images/interests.png')} /> */}
@@ -170,7 +173,7 @@ const styles = StyleSheet.create({
   ProfileCon: {
     flex: 1,
     //margin: 20,
-    marginTop: -10,
+    marginTop: 10,
     //alignItems: 'center',
   },
   ProfileName: {
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
     //width: 350,
     flex: 1,
     padding: 20,
-    marginTop: -80,
+    marginTop: 15,
     backgroundColor: 'white',
     borderColor: '#ED4A4A',
     borderWidth: 2,
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
     //width: 350,
     flex: 1,
     padding: 20,
-    marginTop: -80,
+    marginTop: 20,
     backgroundColor: 'white',
     borderColor: '#ED4A4A',
     borderWidth: 2,
@@ -214,7 +217,7 @@ const styles = StyleSheet.create({
     height: 110,
     width: 110,
     padding: 20,
-    marginTop: 0,
+    marginTop: -80,
     backgroundColor: 'white',
     borderColor: '#ED4A4A',
     borderWidth: 4,

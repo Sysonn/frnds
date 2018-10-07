@@ -15,7 +15,7 @@ export const Tab = createBottomTabNavigator({
     screen: Home,
     navigationOptions: {
       tabBarIcon:  (
-        <Icon name="home" size={25}/>
+        <Icon name="home" size={25} style={{color: 'white'}}/>
       )
       },
   },
@@ -23,7 +23,7 @@ export const Tab = createBottomTabNavigator({
     screen: Atlas,
     navigationOptions: {
       tabBarIcon:  (
-        <Icon name="flag" size={25}/>
+        <Icon name="flag" size={25} style={{color: 'white'}}/>
       )
       },
   },
@@ -31,7 +31,7 @@ export const Tab = createBottomTabNavigator({
     screen: Sail,
     navigationOptions: {
       tabBarIcon:  (
-        <Icon name="location-on" size={25}/>
+        <Icon name="location-on" size={25} style={{color: 'white'}}/>
       )
       },
   },
@@ -39,7 +39,7 @@ export const Tab = createBottomTabNavigator({
     screen: Frnds,
     navigationOptions: {
       tabBarIcon:  (
-        <Icon name="people" size={25}/>
+        <Icon name="people" size={25} style={{color: 'white'}}/>
       )
       },
   },
@@ -47,7 +47,7 @@ export const Tab = createBottomTabNavigator({
     screen: Profile,
     navigationOptions: {
       tabBarIcon:  (
-        <Icon name="person-outline" size={25}/>
+        <Icon name="person-outline" size={25} style={{color: 'white'}}/>
       )
       },
   },

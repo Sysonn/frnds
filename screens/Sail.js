@@ -184,7 +184,7 @@ export default class Sail extends Component{
 
         }}>
         <Image
-          style={{flex: 1, width: 140, height: 145, resizeMode: 'cover',  borderRadius:1000}}
+          style={{flex: 1, width: 140, height: 145, resizeMode: 'cover',  borderRadius:70}}
           source={item.uri}/>
         </Animated.View>
 
@@ -244,7 +244,7 @@ export default class Sail extends Component{
 
         }}>
         <Image
-          style={{flex: 1, width: 140, resizeMode: 'cover', height: 145, borderRadius: 1000}}
+          style={{flex: 1, width: 140, resizeMode: 'cover', height: 145, borderRadius: 70}}
           source={item.uri}/>
         </Animated.View>
 
