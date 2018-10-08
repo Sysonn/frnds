@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Button,
   Platform,
   StyleSheet,
   Text,
@@ -12,7 +13,7 @@ import {
   TouchableHighlight,
   StatusBar
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 
 export default class Profile extends Component{
@@ -52,7 +53,7 @@ export default class Profile extends Component{
 
         <ScrollView style={styles.body}>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Store')}>
           <View style={styles.bloonRight}>
           <Icon style={styles.bloonIcon} name="radio-button-checked" size={25}/>
           <Text style={styles.bloonTxt}>1,230</Text>

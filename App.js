@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { createBottomTabNavigator } from "react-navigation";
-import { SafeAreaView } from 'react-native';
-import Styles from './styles/styles.js';
+import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
+import { SafeAreaView, StatusBar } from 'react-native';
+// import Styles from './styles/styles.js';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Home from './screens/Home';
@@ -9,8 +9,10 @@ import Profile from './screens/Profile';
 import Frnds from './screens/Frnds';
 import Sail from './screens/Sail';
 import Atlas from './screens/Atlas';
+import Tab from './screens/Tab'; 
 
-export const Tab = createBottomTabNavigator({
+
+export const TabBar = createBottomTabNavigator({
   Home: {
     screen: Home,
     navigationOptions: {
@@ -43,15 +45,14 @@ export const Tab = createBottomTabNavigator({
       )
       },
   },
-  Profile: {
-    screen: Profile,
+  Tab: {
+    screen: Tab,
     navigationOptions: {
       tabBarIcon:  (
         <Icon name="person-outline" size={25} style={{color: 'white'}}/>
       )
       },
   },
-  
 }, {
   tabBarPosition: 'bottom',
   swipeEnabled: true,
@@ -72,11 +73,18 @@ export const Tab = createBottomTabNavigator({
   }
 });
 
+
 export default class App extends Component {
   render() {
+  
       return( 
+        
       <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
-      <Tab /> 
+      <StatusBar
+            backgroundColor="#C43F3F"
+            barStyle="light-content"
+            />
+      <TabBar /> 
       </SafeAreaView>
       );
   }

@@ -37,7 +37,7 @@ export default class Atlas extends Component {
         <View style={styles.navBar}>
           {/* <Image source={require('./images/flogo.png')} style={{ width: 100, height: 50 }} /> */}
           <Icon style={styles.noteItem} name="notifications" size={25} />
-          <Text style={{alignItems: 'center', justifyContent: 'center', color: 'white', marginLeft: 60, fontSize: 24, fontWeight:'bold'}} >Categories</Text>
+          <Text style={{alignItems: 'center', justifyContent: 'center', color: 'white', marginLeft: 60, fontSize: 20, fontWeight:'bold'}} >Atlas</Text>
           <View style={styles.rightNav}>
             <TouchableOpacity>
               <Icon style={styles.navItem} name="search" size={25} />
