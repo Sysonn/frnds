@@ -12,10 +12,11 @@ import Atlas from './screens/Atlas';
 import Tab from './screens/Tab'; 
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import frndsApp from "./reducers";
 
-let store = createStore(frndsApp);
+let store = createStore(frndsApp, applyMiddleware(thunk));
 
 export const TabBar = createBottomTabNavigator({
   Home: {

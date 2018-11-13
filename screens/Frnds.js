@@ -26,7 +26,7 @@ const options = {
   auto: 'none'
 }
 
-t.form.Form.stylesheet.textbox.normal.color = 'white';
+t.form.Form.stylesheet.textbox.normal.color = "#ffffff";
 
 //const formValue = this._form.getValue();
 
@@ -35,36 +35,40 @@ class SettingsScreen extends React.Component {
   constructor(props){
     super(props);
     
-    //this.state ={ isLoading: true, results:{items: [] }}
-    this.state = { isLoading: true, refreshing: false, dataSource: [] }
+    
+    //this.state = { isLoading: true, refreshing: false, dataSource: [] }
+ 
   }
 
-  
 
-    componentDidMount(){
-      return fetch('http://159.203.185.162/users/')
-        .then((response) => response.json())
-        .then((responseJson) => {
-          console.log(responseJson);
-          this.setState({
-            isLoading: false,
-            dataSource: responseJson,
-          }, function(){
+  componentDidMount() {
+    this.props.fetchFrnds();
+}
+
+    // componentDidMount(){
+    //   return fetch('http://159.203.185.162/users/')
+    //     .then((response) => response.json())
+    //     .then((responseJson) => {
+    //       console.log(responseJson);
+    //       this.setState({
+    //         isLoading: false,
+    //         dataSource: responseJson,
+    //       }, function(){
   
-          });
+    //       });
   
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
-    }
-  
-    _onRefresh = () => {
-      this.setState({refreshing: true});
-      this.componentDidMount().then(() => {
-        this.setState({refreshing: false});
-      });
-    }
+    //     })
+    //     .catch((error) =>{
+    //       console.error(error);
+    //     });
+    // }
+  ///////////////////////////////////////////////
+    // _onRefresh = () => {
+    //   this.setState({refreshing: true});
+    //   this.componentDidMount().then(() => {
+    //     this.setState({refreshing: false});
+    //   });
+    // }
 
     state = {
       text: "",
@@ -126,14 +130,14 @@ class SettingsScreen extends React.Component {
       // JSON.stringify(responseJson);
       // test = reso
       //console.log(fetch('http://159.203.185.162/snippets/2/'));
-
-      if(this.state.isLoading){
-        return(
-          <View style={{flex: 1, padding: 20}}>
-            <ActivityIndicator/>
-          </View>
-        )
-      }
+  ///////////////////////////////////////
+      // if(this.state.isLoading){
+      //   return(
+      //     <View style={{flex: 1, padding: 20}}>
+      //       <ActivityIndicator/>
+      //     </View>
+      //   )
+      // }
 
       return (
         <View style={styles.container}>
@@ -156,12 +160,13 @@ class SettingsScreen extends React.Component {
           </View>
 
         <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center', alignItems: 'center'}}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />
-        }>
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={this.state.refreshing}
+        //     onRefresh={this._onRefresh}
+        //   />
+        // }
+        >
 
         <View style={{flex: 1, width: 350}}>
         <Text style={{fontSize: 24, color: 'white',}}>Add Frnd</Text>
@@ -175,8 +180,9 @@ class SettingsScreen extends React.Component {
             title="Add"
             onPress={this.handleSubmit}
           />
-          <View style={{marginTop: 15}}>
+          <View style={{marginTop: 15, marginBottom: 25}}>
           <Button 
+            style ={{backgroundColor: "red"}}
             title="Reset"
             onPress={this.resetForm}
           />
@@ -185,14 +191,20 @@ class SettingsScreen extends React.Component {
         </View>
 
           {this.props.frnds.map((frnd, id) => (
-          <View style={{maxWidth: 200, marginTop: 30}} key={`frnd_${id}`}>
-          <Text style={{fontSize: 24, color: 'white',}}>{frnd.text} </Text>
-          <Button title="Delete" onPress={() => this.props.deleteFrnd(id)}></Button>
+          //<View style={{ marginTop: 30}} key={`frnd_${id}`}>
+         
+          <View style={styles.bodyButt} key={`frnd_${id}`}>
+          <Text style={styles.profileName}>@{frnd.username}</Text>
+          <Text style={styles.emailName}>{frnd.email}</Text>
+          {/* </View> */}
+          <View style={{marginTop: 10, marginBottom: 10}}>
+          <Button title="Delete"  onPress={() => this.props.deleteFrnd(id)}></Button>
+          </View>
           <Button title="Edit" onPress={() => this.selectForEdit(id)}></Button>
           </View>
           ))}
 
-          <FlatList
+          {/* <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => 
           <View style={styles.bodyButt}>
@@ -202,7 +214,8 @@ class SettingsScreen extends React.Component {
         }
           keyExtractor={({id}) => id}
           style={{marginTop: 25}}
-        />
+        /> */}
+
         </ScrollView>
         </View>
       );
@@ -228,6 +241,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteFrnd: (id) => {
       dispatch(frnds.deleteFrnd(id));
+    },
+    fetchFrnds: () => {
+      dispatch(frnds.fetchFrnds());
     },
   }
 }
@@ -339,6 +355,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
       flex: 1,
       padding: 5,
       paddingTop: 5,
+      paddingBottom: 25,
       marginTop: 0,
       backgroundColor: 'white',
       margin: 10,

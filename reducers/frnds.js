@@ -1,6 +1,4 @@
-const initialState = [
-    {text: "Friends are cool!"}
-  ];
+const initialState = [];
   
   
 //   export default function frnds(state=initialState, action) {
@@ -27,6 +25,9 @@ export default function frnds(state=initialState, action) {
       case 'DELETE_FRND':
         frndList.splice(action.id, 1);
         return frndList;
+      
+      case 'FETCH_FRNDS':
+        return [...state, ...action.frnds];
   
       default:
         return state;
