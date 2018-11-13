@@ -11,6 +11,11 @@ import Sail from './screens/Sail';
 import Atlas from './screens/Atlas';
 import Tab from './screens/Tab'; 
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import frndsApp from "./reducers";
+
+let store = createStore(frndsApp);
 
 export const TabBar = createBottomTabNavigator({
   Home: {
@@ -78,7 +83,7 @@ export default class App extends Component {
   render() {
   
       return( 
-        
+      <Provider store={store}>
       <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
       <StatusBar
             backgroundColor="#C43F3F"
@@ -86,6 +91,7 @@ export default class App extends Component {
             />
       <TabBar /> 
       </SafeAreaView>
+      </Provider>  
       );
   }
 };

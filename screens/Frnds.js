@@ -9,12 +9,28 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
-
+  Button,
  } from 'react-native';
 //import api from './utilities/api';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {connect} from 'react-redux';
+import t from 'tcomb-form-native'; // 0.6.9
 
-export default class SettingsScreen extends React.Component {
+const Form = t.form.Form;
+
+const Frnd = t.struct({
+  frndForm: t.String,
+});
+
+const options = {
+  auto: 'none'
+}
+
+t.form.Form.stylesheet.textbox.normal.color = 'white';
+
+//const formValue = this._form.getValue();
+
+class SettingsScreen extends React.Component {
 
   constructor(props){
     super(props);
@@ -50,8 +66,63 @@ export default class SettingsScreen extends React.Component {
       });
     }
 
-    render() {
+    state = {
+      text: "",
+      updateFrndId: null,
+    }
+    
+    resetForm = () => {
+      this.setState({text: "", updateFrndId: null});
+    }
+    
+    selectForEdit = (id) => {
+
+      let frnd = this.props.frnds[id];
+      this.setState({text: frnd.text, updateFrndId: id});
+
+    }
+    
+    handleSubmit = () =>{
+
+      const formValue = this._form.getValue();
+     
+      if(formValue === null){
+        console.log('formValue is null: ',formValue)
+        this.resetForm();
+      }else{
+
+          console.log('formValue: ',formValue)
+          finalValue = formValue.frndForm;
       
+          this.state.text = finalValue;
+          //this.state.updateFrndId = null;
+          console.log('State text: ', this.state.text);
+      
+          //this.props.addFrnd(finalValue);
+      
+          if (this.state.updateFrndId === null) {
+            console.log('update === null, ID=', this.state.updateFrndId);
+            console.log('Val: ', finalValue);
+            this.props.addFrnd(finalValue);
+          } else {
+            console.log('update != null, ID=', this.state.updateFrndId);
+            console.log('state.text = ', this.state.text);
+            this.props.updateFrnd(this.state.updateFrndId, finalValue);
+          }
+          this.resetForm();
+      
+          }
+
+      }
+
+    // submitFrnd = (e) => {
+    //   e.preventDefault();
+    //   this.props.addFrnd(this.state.text);
+    //   this.setState({text: ""});
+    // }
+    
+ 
+    render() {
       // JSON.stringify(responseJson);
       // test = reso
       //console.log(fetch('http://159.203.185.162/snippets/2/'));
@@ -92,8 +163,35 @@ export default class SettingsScreen extends React.Component {
           />
         }>
 
-        
-          {/* <Text>Frnds</Text> */}
+        <View style={{flex: 1, width: 350}}>
+        <Text style={{fontSize: 24, color: 'white',}}>Add Frnd</Text>
+          <Form 
+          ref={c => this._form = c}
+          type={Frnd}
+          options={options} 
+          />
+
+          <Button
+            title="Add"
+            onPress={this.handleSubmit}
+          />
+          <View style={{marginTop: 15}}>
+          <Button 
+            title="Reset"
+            onPress={this.resetForm}
+          />
+          </View>
+
+        </View>
+
+          {this.props.frnds.map((frnd, id) => (
+          <View style={{maxWidth: 200, marginTop: 30}} key={`frnd_${id}`}>
+          <Text style={{fontSize: 24, color: 'white',}}>{frnd.text} </Text>
+          <Button title="Delete" onPress={() => this.props.deleteFrnd(id)}></Button>
+          <Button title="Edit" onPress={() => this.selectForEdit(id)}></Button>
+          </View>
+          ))}
+
           <FlatList
           data={this.state.dataSource}
           renderItem={({item}) => 
@@ -110,6 +208,33 @@ export default class SettingsScreen extends React.Component {
       );
     }
   }
+
+ 
+const mapStateToProps = state => {
+    return {
+      frnds: state.frnds,
+    }
+  }
+  
+  import {frnds} from "../actions";
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addFrnd: (text) => {
+      dispatch(frnds.addFrnd(text));
+    },
+    updateFrnd: (id, text) => {
+      dispatch(frnds.updateFrnd(id, text));
+    },
+    deleteFrnd: (id) => {
+      dispatch(frnds.deleteFrnd(id));
+    },
+  }
+}
+
+
+  
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
 
    const styles = StyleSheet.create({
   
