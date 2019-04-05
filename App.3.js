@@ -15,8 +15,6 @@ import Login from './screens/Login';
 import { Provider, connect } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-
-import {auth} from "./actions";
 import frndsApp from "./reducers";
 
 import { isSignedIn } from "./screens/utilities/auth";
@@ -91,69 +89,89 @@ export const LoginNav = createSwitchNavigator({
   },
 });
 
-
 class RootContainerComponent extends Component {
 
+}
+
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      signedIn: false,
+      checkedSignIn: false
+    };
+  }
 
   componentDidMount() {
-    this.props.loadUser();
+    isSignedIn()
+      .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
+      .catch(err => alert("An error occurred"));
   }
+
 
   render() {
   
+      // return( 
+      // <Provider store={store}>
+      // <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
+      // <StatusBar
+      //       backgroundColor="#C43F3F"
+      //       barStyle="light-content"
+      //       />
+      // {/* <TabBar />  */}
+      // <LoginNav />
+      // {/* <RootContainer /> */}
+      // </SafeAreaView>
+      // </Provider>  
+      // );
 
-    
-  
-      if (!this.props.auth.isAuthenticated) {
+      const { checkedSignIn, signedIn } = this.state;
+
+      // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
+      if (!checkedSignIn) {
+        //return null;
         return( 
-         
-            <LoginNav /> 
-         
+          <Provider store={store}>
+          <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
+          <StatusBar
+                backgroundColor="#C43F3F"
+                barStyle="light-content"
+                />
+          <LoginNav /> 
+          </SafeAreaView>
+          </Provider>  
+      );
+      }
+  
+      if (signedIn) {
+        return( 
+            <Provider store={store}>
+            <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
+            <StatusBar
+                  backgroundColor="#C43F3F"
+                  barStyle="light-content"
+                  />
+            <TabBar /> 
+            </SafeAreaView>
+            </Provider>  
         );
 
       } else {
 
         return( 
-      
-          <TabBar /> 
-         
+          <Provider store={store}>
+          <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
+          <StatusBar
+                backgroundColor="#C43F3F"
+                barStyle="light-content"
+                />
+          <LoginNav /> 
+          </SafeAreaView>
+          </Provider>  
       );
       }  
 
   }
 };
-
-const mapStateToProps = state => {
-  return {
-    auth: state.auth,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    loadUser: () => {
-      return dispatch(auth.loadUser());
-    }
-  }
-}
-
-
-let RootContainer =  connect(mapStateToProps, mapDispatchToProps)(RootContainerComponent);
-
-export default class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <SafeAreaView style={{flex: 1, backgroundColor: '#ED4A4A'}}>
-          <StatusBar
-                backgroundColor="#C43F3F"
-                barStyle="light-content"
-                />
-
-        <RootContainer />
-
-        </SafeAreaView>
-      </Provider>
-    )
-  }
-}

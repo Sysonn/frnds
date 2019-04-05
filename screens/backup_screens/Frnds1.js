@@ -11,14 +11,14 @@ import {
   StatusBar,
   Button,
  } from 'react-native';
-//import api from './utilities/api';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {connect} from 'react-redux';
 import t from 'tcomb-form-native'; // 0.6.9
 
 const Form = t.form.Form;
 
-const Frnd = t.struct({
+const Post = t.struct({
   frndForm: t.String,
 });
 
@@ -27,62 +27,34 @@ const options = {
 }
 
 t.form.Form.stylesheet.textbox.normal.color = "#ffffff";
-
 //const formValue = this._form.getValue();
 
 class SettingsScreen extends React.Component {
 
   constructor(props){
     super(props);
-    
-    
     //this.state = { isLoading: true, refreshing: false, dataSource: [] }
- 
   }
 
 
   componentDidMount() {
-    this.props.fetchFrnds();
+    this.props.fetchPosts();
 }
 
-    // componentDidMount(){
-    //   return fetch('http://159.203.185.162/users/')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //       console.log(responseJson);
-    //       this.setState({
-    //         isLoading: false,
-    //         dataSource: responseJson,
-    //       }, function(){
-  
-    //       });
-  
-    //     })
-    //     .catch((error) =>{
-    //       console.error(error);
-    //     });
-    // }
-  ///////////////////////////////////////////////
-    // _onRefresh = () => {
-    //   this.setState({refreshing: true});
-    //   this.componentDidMount().then(() => {
-    //     this.setState({refreshing: false});
-    //   });
-    // }
 
     state = {
       text: "",
-      updateFrndId: null,
+      updatePostId: null,
     }
     
     resetForm = () => {
-      this.setState({text: "", updateFrndId: null});
+      this.setState({text: "", updatePostId: null});
     }
     
     selectForEdit = (id) => {
 
-      let frnd = this.props.frnds[id];
-      this.setState({text: frnd.text, updateFrndId: id});
+      let post = this.props.posts[id];
+      this.setState({text: post.postcontent, updatePostId: id});
 
     }
     
@@ -99,19 +71,17 @@ class SettingsScreen extends React.Component {
           finalValue = formValue.frndForm;
       
           this.state.text = finalValue;
-          //this.state.updateFrndId = null;
-          console.log('State text: ', this.state.text);
+          console.log('State text: ', this.state.postcontent);
       
-          //this.props.addFrnd(finalValue);
       
-          if (this.state.updateFrndId === null) {
-            console.log('update === null, ID=', this.state.updateFrndId);
+          if (this.state.updatePostId === null) {
+            console.log('update === null, ID=', this.state.updatePostId);
             console.log('Val: ', finalValue);
-            this.props.addFrnd(finalValue).then(this.resetForm);
+            this.props.addPost(finalValue).then(this.resetForm);
           } else {
-            console.log('update != null, ID=', this.state.updateFrndId);
-            console.log('state.text = ', this.state.text);
-            this.props.updateFrnd(this.state.updateFrndId, finalValue);
+            console.log('update != null, ID=', this.state.updatePostId);
+            console.log('state.text = ', this.state.postcontent);
+            this.props.updatePost(this.state.updatePostId, finalValue);
           }
           this.resetForm();
       
@@ -127,17 +97,6 @@ class SettingsScreen extends React.Component {
     
  
     render() {
-      // JSON.stringify(responseJson);
-      // test = reso
-      //console.log(fetch('http://159.203.185.162/snippets/2/'));
-  ///////////////////////////////////////
-      // if(this.state.isLoading){
-      //   return(
-      //     <View style={{flex: 1, padding: 20}}>
-      //       <ActivityIndicator/>
-      //     </View>
-      //   )
-      // }
 
       return (
         <View style={styles.container}>
@@ -169,10 +128,10 @@ class SettingsScreen extends React.Component {
         >
 
         <View style={{flex: 1, width: 350}}>
-        <Text style={{fontSize: 24, color: 'white',}}>Add Frnd</Text>
+        <Text style={{fontSize: 24, color: 'white',}}>Add Post</Text>
           <Form 
           ref={c => this._form = c}
-          type={Frnd}
+          type={Post}
           options={options} 
           />
 
@@ -190,31 +149,20 @@ class SettingsScreen extends React.Component {
 
         </View>
 
-          {this.props.frnds.map((frnd, id) => (
-          //<View style={{ marginTop: 30}} key={`frnd_${id}`}>
+          {this.props.posts.map((post, id) => (
          
-          <View style={styles.bodyButt} key={`frnd_${id}`}>
-          <Text style={styles.profileName}>@{frnd.username}</Text>
-          <Text style={styles.emailName}>{frnd.email}</Text>
-          {/* </View> */}
+         
+          <View style={styles.bodyButt} key={`post_${id}`}>
+          <Text style={styles.profileName}>{post.id}</Text>
+          <Text style={styles.emailName}>{post.postcontent}</Text>
+          
           <View style={{marginTop: 10, marginBottom: 10}}>
-          <Button title="Delete"  onPress={() => this.props.deleteFrnd(id)}></Button>
+          <Button title="Delete"  onPress={() => this.props.deletePost(id)}></Button>
           </View>
           <Button title="Edit" onPress={() => this.selectForEdit(id)}></Button>
           </View>
           ))}
 
-          {/* <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) => 
-          <View style={styles.bodyButt}>
-          <Text style={styles.profileName}>@{item.username}</Text>
-          <Text style={styles.emailName}>{item.email}</Text>
-          </View>
-        }
-          keyExtractor={({id}) => id}
-          style={{marginTop: 25}}
-        /> */}
 
         </ScrollView>
         </View>
@@ -225,25 +173,25 @@ class SettingsScreen extends React.Component {
  
 const mapStateToProps = state => {
     return {
-      frnds: state.frnds,
+      posts: state.posts,
     }
   }
   
-  import {frnds} from "../actions";
+  import {posts} from "../actions";
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFrnd: (text) => {
-     return dispatch(frnds.addFrnd(text));
+    addPost: (postcontent) => {
+     return dispatch(posts.addPost(postcontent));
     },
-    updateFrnd: (id, text) => {
-      dispatch(frnds.updateFrnd(id, text));
+    updatePost: (id, postcontent) => {
+      dispatch(posts.updatePost(id, postcontent));
     },
-    deleteFrnd: (id) => {
-      dispatch(frnds.deleteFrnd(id));
+    deletePost: (id) => {
+      dispatch(posts.deletePost(id));
     },
-    fetchFrnds: () => {
-      dispatch(frnds.fetchFrnds());
+    fetchPosts: () => {
+      dispatch(posts.fetchPosts());
     },
   }
 }
@@ -301,7 +249,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
     },
     profileName: {
       elevation: 2,
-      //fontFamily:'varelaround',
       fontSize: 22,
       alignItems: 'center',
       fontWeight: 'bold',
@@ -310,7 +257,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
     },
     emailName: {
       elevation: 2,
-      //fontFamily:'varelaround',
       fontSize: 16,
       alignItems: 'center',
       fontWeight: 'bold',
@@ -320,16 +266,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
     
     body: {
       flex: 1,
-      //backgroundColor: '#EFEFEF',
       backgroundColor: '#BC4444',
       
     },
     tabBar: {
-      //backgroundColor: 'white',
       backgroundColor: '#ED4A4A',
       height: 50,
-      // borderTopWidth: 2,
-      //borderColor: '#ED4A4A',
       flexDirection: 'row',
       justifyContent: 'space-around',
     },
@@ -340,7 +282,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
     },
     tabnavItem: {
       marginLeft: 25,
-     // color:  '#ED4A4A',
      color: 'white',
     },
     tabTitle: {

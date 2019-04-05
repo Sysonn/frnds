@@ -1,7 +1,16 @@
-export const addFrnd = text => {
-    return {
-      type: 'ADD_FRND',
-      text
+export const addFrnd = (username) => {
+    return dispatch => {
+      let headers = {"Content-Type": "application/json"};
+      email =(username + "@mail.com");
+      let body = JSON.stringify({username, email });
+      return fetch("http://159.203.185.162/users/", {headers, method: "POST", body})
+        .then(res => res.json())
+        .then(frnds => {
+          return dispatch({
+            type: 'ADD_FRND',
+            frnds
+          })
+        })
     }
   }
   

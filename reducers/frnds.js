@@ -14,7 +14,7 @@ export default function frnds(state=initialState, action) {
     switch (action.type) {
   
       case 'ADD_FRND':
-        return [...state, {text: action.text}];
+        return [...state, action.frnds];
   
       case 'UPDATE_FRND':
         let frndToUpdate = frndList[action.id]
